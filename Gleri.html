@@ -32,10 +32,27 @@ h1{font-family:'Space Grotesk',sans-serif;line-height:1.2;margin-top:0;font-size
 .galeri{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
 .galeri figure{margin:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:.2s}
 .galeri figure:hover{border-color:rgba(139,123,255,.55);transform:translateY(-2px)}
-.galeri img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 30%;background:#0a0a18}
+.galeri img,.img-err{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 30%;background:#0a0a18}
+.img-err{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;font-size:.85rem;color:#fca5a5;border-bottom:1px solid var(--border)}
+.img-err code{margin-top:6px;color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:.8rem}
 .galeri figcaption{padding:12px 16px;font-size:.9rem;color:var(--muted)}
 .bawah{border-top:1px solid var(--border);padding:22px 0;font-size:.875rem;color:var(--muted)}
 </style>
+<script>
+function cobaExt(img) {
+  const exts = ['.jpeg', '.JPG', '.JPEG', '.png'];
+  const i = Number(img.dataset.i || 0);
+  if (i < exts.length) {
+    img.dataset.i = i + 1;
+    img.src = img.dataset.base + exts[i];
+  } else {
+    const d = document.createElement('div');
+    d.className = 'img-err';
+    d.innerHTML = 'Foto belum ketemu di GitHub:<code>' + img.dataset.base + '.jpg / .jpeg</code>';
+    img.replaceWith(d);
+  }
+}
+</script>
 </head>
 <body>
 <header class="top">
@@ -60,11 +77,11 @@ h1{font-family:'Space Grotesk',sans-serif;line-height:1.2;margin-top:0;font-size
     <h1>Galeri</h1>
     <p class="lead">Dokumentasi kegiatan dan momen yang saya simpan.</p>
     <div class="galeri">
-      <figure class="f1"><img src="foto/foto1.jpg" alt="Layar Zoom pelatihan kaji cepat bencana" loading="lazy" onerror="this.remove()"><figcaption>Pelatihan Kaji Cepat Bencana via Zoom, Juli 2022</figcaption></figure>
-      <figure class="f2"><img src="foto/foto2.jpg" alt="Potret diri Albert di dalam ruangan" loading="lazy" onerror="this.remove()"><figcaption>Momen santai di kafe</figcaption></figure>
-      <figure class="f3"><img src="foto/foto3.jpg" alt="Tampak depan keseluruhan Sulthan Kost" loading="lazy" onerror="this.remove()"><figcaption>Tampak depan area Sulthan Kost</figcaption></figure>
-      <figure class="f4"><img src="foto/foto4.jpg" alt="Gerbang masuk dan kamar Sulthan Kost" loading="lazy" onerror="this.remove()"><figcaption>Gerbang masuk dan deretan kamar Sulthan Kost</figcaption></figure>
-      <figure class="f5"><img src="foto/foto5.jpg" alt="Sudut bangunan samping Sulthan Kost" loading="lazy" onerror="this.remove()"><figcaption>Tampak sudut bangunan Sulthan Kost</figcaption></figure>
+      <figure class="f1"><img src="foto/foto1.jpg" data-base="foto/foto1" alt="Layar Zoom pelatihan kaji cepat bencana" loading="lazy" onerror="cobaExt(this)"><figcaption>Pelatihan Kaji Cepat Bencana via Zoom, Juli 2022</figcaption></figure>
+      <figure class="f2"><img src="foto/foto2.jpg" data-base="foto/foto2" alt="Potret diri Albert di dalam ruangan" loading="lazy" onerror="cobaExt(this)"><figcaption>Momen santai di kafe</figcaption></figure>
+      <figure class="f3"><img src="foto/foto3.jpg" data-base="foto/foto3" alt="Tampak depan keseluruhan Sulthan Kost" loading="lazy" onerror="cobaExt(this)"><figcaption>Tampak depan area Sulthan Kost</figcaption></figure>
+      <figure class="f4"><img src="foto/foto4.jpg" data-base="foto/foto4" alt="Gerbang masuk dan kamar Sulthan Kost" loading="lazy" onerror="cobaExt(this)"><figcaption>Gerbang masuk dan deretan kamar Sulthan Kost</figcaption></figure>
+      <figure class="f5"><img src="foto/foto5.jpg" data-base="foto/foto5" alt="Sudut bangunan samping Sulthan Kost" loading="lazy" onerror="cobaExt(this)"><figcaption>Tampak sudut bangunan Sulthan Kost</figcaption></figure>
     </div>
   </div>
 </main>
